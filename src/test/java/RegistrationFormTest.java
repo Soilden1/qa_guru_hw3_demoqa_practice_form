@@ -3,8 +3,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -21,7 +19,7 @@ public class RegistrationFormTest {
     private static final String SUBJECT2 = "English";
     private static final String HOBBY1 = "Reading";
     private static final String HOBBY2 = "Music";
-    private static final File PICTURE = new File("resources/human.png");
+    private static final String PICTURE_PATH = "human.png";
     private static final String CURRENT_ADDRESS = "Pushkin street, house 333";
     private static final String STATE = "NCR";
     private static final String CITY = "Delhi";
@@ -35,8 +33,11 @@ public class RegistrationFormTest {
     }
 
     @Test
-    void RegistrationTest() {
+    void registrationTest() {
         open("/automation-practice-form");
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
+
         $("#firstName").setValue(FIRST_NAME);
         $("#lastName").setValue(LAST_NAME);
         $("#userEmail").setValue(EMAIL);
@@ -52,7 +53,7 @@ public class RegistrationFormTest {
         $("#hobbiesWrapper").$(byText(HOBBY1)).click();
         $("#hobbiesWrapper").$(byText(HOBBY2)).click();
 
-        $("#uploadPicture").uploadFile(PICTURE);
+        $("#uploadPicture").uploadFromClasspath(PICTURE_PATH);
         $("#currentAddress").setValue(CURRENT_ADDRESS);
         $("#stateCity-wrapper #state input").setValue(STATE).sendKeys(Keys.ENTER);
         $("#stateCity-wrapper #city input").setValue(CITY).sendKeys(Keys.ENTER);
@@ -67,7 +68,7 @@ public class RegistrationFormTest {
                 text(DATE_OF_BIRTH),
                 text(SUBJECT1 + ", " + SUBJECT2),
                 text(HOBBY1 + ", " + HOBBY2),
-                text(PICTURE.getName()),
+                text(PICTURE_PATH),
                 text(CURRENT_ADDRESS),
                 text(STATE + " " + CITY));
     }
