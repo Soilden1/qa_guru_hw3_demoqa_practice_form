@@ -1,11 +1,9 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.io.File;
-import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -60,19 +58,17 @@ public class RegistrationFormTest {
         $("#stateCity-wrapper #city input").setValue(CITY).sendKeys(Keys.ENTER);
         $("#submit").click();
 
-        SelenideElement table = $(".table-responsive .table");
-        List<SelenideElement> rows = table.findAll("tr");
-
         $(".modal-header .modal-title").shouldHave(text(COMPLETE_SUBMIT_MESSAGE));
-        rows.get(1).shouldHave(text(FIRST_NAME + " " + LAST_NAME));
-        rows.get(2).shouldHave(text(EMAIL));
-        rows.get(3).shouldHave(text(GENDER));
-        rows.get(4).shouldHave(text(PHONE_NUMBER));
-        rows.get(5).shouldHave(text(DATE_OF_BIRTH));
-        rows.get(6).shouldHave(text(SUBJECT1 + ", " + SUBJECT2));
-        rows.get(7).shouldHave(text(HOBBY1 + ", " + HOBBY2));
-        rows.get(8).shouldHave(text(PICTURE.getName()));
-        rows.get(9).shouldHave(text(CURRENT_ADDRESS));
-        rows.get(10).shouldHave(text(STATE + " " + CITY));
+        $(".table-responsive .table").shouldHave(
+                text(FIRST_NAME + " " + LAST_NAME),
+                text(EMAIL),
+                text(GENDER),
+                text(PHONE_NUMBER),
+                text(DATE_OF_BIRTH),
+                text(SUBJECT1 + ", " + SUBJECT2),
+                text(HOBBY1 + ", " + HOBBY2),
+                text(PICTURE.getName()),
+                text(CURRENT_ADDRESS),
+                text(STATE + " " + CITY));
     }
 }
