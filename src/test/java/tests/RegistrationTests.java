@@ -1,7 +1,9 @@
 package tests;
 
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import pages.RegistrationPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -30,18 +32,17 @@ public class RegistrationTests extends TestBase {
     private static final String CITY = "Delhi";
     private static final String COMPLETE_SUBMIT_MESSAGE = "Thanks for submitting the form";
 
+
+    RegistrationPage registrationPage = new RegistrationPage();
     @Test
     void successfulRegistrationTest() {
-        open("/automation-practice-form");
-        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
 
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("#userEmail").setValue(EMAIL);
-        $("#genterWrapper").$(byText(GENDER)).click();
-        $("#userNumber").setValue(PHONE_NUMBER);
+        registrationPage.openPage()
+                        .setFirstName(FIRST_NAME)
+                        .setLastName(LAST_NAME)
+                        .setUserEmail(EMAIL)
+                        .setGender(GENDER)
+                        .setUserNumber(PHONE_NUMBER);
 
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption(DATE_OF_BIRTH_MONTH);
