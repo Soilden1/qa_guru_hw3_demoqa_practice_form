@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -14,12 +15,16 @@ public class RegistrationFormTest {
     private static final String EMAIL = "IvanovIvan123@gmail.com";
     private static final String GENDER = "Male";
     private static final String PHONE_NUMBER = "8005553535";
-    private static final String DATE_OF_BIRTH = "07 January,2004";
+    private static final String DATE_OF_BIRTH_DAY = "30";
+    private static final String DATE_OF_BIRTH_MONTH = "July";
+    private static final String DATE_OF_BIRTH_YEAR = "2023";
+    private static final String DATE_OF_BIRTH = DATE_OF_BIRTH_DAY + " " + DATE_OF_BIRTH_MONTH + "," + DATE_OF_BIRTH_YEAR;
     private static final String SUBJECT1 = "Computer Science";
     private static final String SUBJECT2 = "English";
     private static final String HOBBY1 = "Reading";
     private static final String HOBBY2 = "Music";
-    private static final String PICTURE_PATH = "human.png";
+    private static final String PICTURE_PATH = "img/human.png";
+    private static final String PICTURE_NAME = "human.png";
     private static final String CURRENT_ADDRESS = "Pushkin street, house 333";
     private static final String STATE = "NCR";
     private static final String CITY = "Delhi";
@@ -35,6 +40,7 @@ public class RegistrationFormTest {
     @Test
     void registrationTest() {
         open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
@@ -44,8 +50,11 @@ public class RegistrationFormTest {
         $("#genterWrapper").$(byText(GENDER)).click();
         $("#userNumber").setValue(PHONE_NUMBER);
 
-        $("#dateOfBirthInput").sendKeys(Keys.CONTROL, "A");
-        $("#dateOfBirthInput").sendKeys(DATE_OF_BIRTH, Keys.ENTER);
+        $("#dateOfBirthInput").click();
+        $(".react-datepicker__month-select").selectOption(DATE_OF_BIRTH_MONTH);
+        $(".react-datepicker__year-select").selectOption(DATE_OF_BIRTH_YEAR);
+        String dayLocator = ".react-datepicker__day--0" + DATE_OF_BIRTH_DAY;
+        $(dayLocator + ":not(.react-datepicker__day--outside-month)").click();
 
         $("#subjectsInput").setValue(SUBJECT1).sendKeys(Keys.ENTER);
         $("#subjectsInput").setValue(SUBJECT2).sendKeys(Keys.ENTER);
@@ -55,11 +64,16 @@ public class RegistrationFormTest {
 
         $("#uploadPicture").uploadFromClasspath(PICTURE_PATH);
         $("#currentAddress").setValue(CURRENT_ADDRESS);
-        $("#stateCity-wrapper #state input").setValue(STATE).sendKeys(Keys.ENTER);
-        $("#stateCity-wrapper #city input").setValue(CITY).sendKeys(Keys.ENTER);
-        $("#submit").click();
 
-        $(".modal-header .modal-title").shouldHave(text(COMPLETE_SUBMIT_MESSAGE));
+        $("#state").click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
+
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
+
+        $("#submit").click();
+        $(".modal-dialog").should(visible);
+        $("#example-modal-sizes-title-lg").shouldHave(text(COMPLETE_SUBMIT_MESSAGE));
         $(".table-responsive .table").shouldHave(
                 text(FIRST_NAME + " " + LAST_NAME),
                 text(EMAIL),
@@ -68,7 +82,7 @@ public class RegistrationFormTest {
                 text(DATE_OF_BIRTH),
                 text(SUBJECT1 + ", " + SUBJECT2),
                 text(HOBBY1 + ", " + HOBBY2),
-                text(PICTURE_PATH),
+                text(PICTURE_NAME),
                 text(CURRENT_ADDRESS),
                 text(STATE + " " + CITY));
     }
