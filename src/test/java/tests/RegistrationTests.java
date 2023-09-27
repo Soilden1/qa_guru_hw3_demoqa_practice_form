@@ -1,5 +1,5 @@
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
+package tests;
+
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class RegistrationFormTest {
+public class RegistrationTests extends TestBase {
 
     private static final String FIRST_NAME = "Ivan";
     private static final String LAST_NAME = "Ivanov";
@@ -30,15 +30,8 @@ public class RegistrationFormTest {
     private static final String CITY = "Delhi";
     private static final String COMPLETE_SUBMIT_MESSAGE = "Thanks for submitting the form";
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
-
     @Test
-    void registrationTest() {
+    void successfulRegistrationTest() {
         open("/automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         executeJavaScript("$('#fixedban').remove()");
