@@ -1,25 +1,20 @@
 package tests;
 
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 import pages.RegistrationPage;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationTests extends TestBase {
 
+    // Test data
     private static final String FIRST_NAME = "Ivan";
     private static final String LAST_NAME = "Ivanov";
     private static final String EMAIL = "IvanovIvan123@gmail.com";
     private static final String GENDER = "Male";
     private static final String PHONE_NUMBER = "8005553535";
+    private static final String INVALID_PHONE_NUMBER = "111";
     private static final String DATE_OF_BIRTH_DAY = "30";
     private static final String DATE_OF_BIRTH_MONTH = "July";
-    private static final String DATE_OF_BIRTH_YEAR = "2023";
+    private static final String DATE_OF_BIRTH_YEAR = "2004";
     private static final String DATE_OF_BIRTH = DATE_OF_BIRTH_DAY + " " + DATE_OF_BIRTH_MONTH + "," + DATE_OF_BIRTH_YEAR;
     private static final String SUBJECT1 = "Computer Science";
     private static final String SUBJECT2 = "English";
@@ -32,52 +27,88 @@ public class RegistrationTests extends TestBase {
     private static final String CITY = "Delhi";
     private static final String COMPLETE_SUBMIT_MESSAGE = "Thanks for submitting the form";
 
+    private static final RegistrationPage registrationPage = new RegistrationPage();
 
-    RegistrationPage registrationPage = new RegistrationPage();
+    // Tests
     @Test
-    void successfulRegistrationTest() {
-
+    public void successfulRegistrationInAllFieldsTest() {
         registrationPage.openPage()
-                        .setFirstName(FIRST_NAME)
-                        .setLastName(LAST_NAME)
-                        .setUserEmail(EMAIL)
-                        .setGender(GENDER)
-                        .setUserNumber(PHONE_NUMBER);
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setEmail(EMAIL)
+                .setGender(GENDER)
+                .setPhoneNumber(PHONE_NUMBER)
+                .setDateOfBirth(DATE_OF_BIRTH_DAY, DATE_OF_BIRTH_MONTH, DATE_OF_BIRTH_YEAR)
+                .setSubjects(SUBJECT1, SUBJECT2)
+                .setHobbies(HOBBY1, HOBBY2)
+                .uploadPicture(PICTURE_PATH)
+                .setCurrentAddress(CURRENT_ADDRESS)
+                .setState(STATE)
+                .setCity(CITY)
+                .submitButtonClick();
 
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption(DATE_OF_BIRTH_MONTH);
-        $(".react-datepicker__year-select").selectOption(DATE_OF_BIRTH_YEAR);
-        String dayLocator = ".react-datepicker__day--0" + DATE_OF_BIRTH_DAY;
-        $(dayLocator + ":not(.react-datepicker__day--outside-month)").click();
+        registrationPage.checkResultModalVisible()
+                .checkResultModalTitleHaveMessage(COMPLETE_SUBMIT_MESSAGE)
+                .checkResult("Student Name", FIRST_NAME + " " + LAST_NAME)
+                .checkResult("Student Email", EMAIL)
+                .checkResult("Gender", GENDER)
+                .checkResult("Mobile", PHONE_NUMBER)
+                .checkResult("Date of Birth", DATE_OF_BIRTH)
+                .checkResult("Subjects", SUBJECT1 + ", " + SUBJECT2)
+                .checkResult("Hobbies", HOBBY1 + ", " + HOBBY2)
+                .checkResult("Picture", PICTURE_NAME)
+                .checkResult("Address", CURRENT_ADDRESS)
+                .checkResult("State and City", STATE + " " + CITY);
+    }
 
-        $("#subjectsInput").setValue(SUBJECT1).sendKeys(Keys.ENTER);
-        $("#subjectsInput").setValue(SUBJECT2).sendKeys(Keys.ENTER);
+    @Test
+    public void successfulRegistrationInRequiredFieldsTest() {
+        registrationPage.openPage()
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setGender(GENDER)
+                .setPhoneNumber(PHONE_NUMBER)
+                .submitButtonClick();
 
-        $("#hobbiesWrapper").$(byText(HOBBY1)).click();
-        $("#hobbiesWrapper").$(byText(HOBBY2)).click();
+        registrationPage.checkResultModalVisible()
+                .checkResultModalTitleHaveMessage(COMPLETE_SUBMIT_MESSAGE)
+                .checkResult("Student Name", FIRST_NAME + " " + LAST_NAME)
+                .checkResult("Gender", GENDER)
+                .checkResult("Mobile", PHONE_NUMBER);
+    }
 
-        $("#uploadPicture").uploadFromClasspath(PICTURE_PATH);
-        $("#currentAddress").setValue(CURRENT_ADDRESS);
+    @Test
+    public void closeModalTest() {
+        registrationPage.openPage()
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setGender(GENDER)
+                .setPhoneNumber(PHONE_NUMBER)
+                .submitButtonClick();
 
-        $("#state").click();
-        $("#stateCity-wrapper").$(byText("NCR")).click();
+        registrationPage.checkResultModalVisible()
+                .checkResultModalTitleHaveMessage(COMPLETE_SUBMIT_MESSAGE)
+                .closeResultModal()
+                .checkResultModalHidden();
+    }
 
-        $("#city").click();
-        $("#stateCity-wrapper").$(byText("Delhi")).click();
+    @Test
+    public void negativeRegistrationWithInvalidPhoneNumberTest() {
+        registrationPage.openPage()
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setGender(GENDER)
+                .setPhoneNumber(INVALID_PHONE_NUMBER)
+                .submitButtonClick();
 
-        $("#submit").click();
-        $(".modal-dialog").should(visible);
-        $("#example-modal-sizes-title-lg").shouldHave(text(COMPLETE_SUBMIT_MESSAGE));
-        $(".table-responsive .table").shouldHave(
-                text(FIRST_NAME + " " + LAST_NAME),
-                text(EMAIL),
-                text(GENDER),
-                text(PHONE_NUMBER),
-                text(DATE_OF_BIRTH),
-                text(SUBJECT1 + ", " + SUBJECT2),
-                text(HOBBY1 + ", " + HOBBY2),
-                text(PICTURE_NAME),
-                text(CURRENT_ADDRESS),
-                text(STATE + " " + CITY));
+        registrationPage.checkResultModalHidden();
+    }
+
+    @Test
+    public void negativeRegistrationWithoutFillingFieldsTest() {
+        registrationPage.openPage()
+                .submitButtonClick();
+
+        registrationPage.checkResultModalHidden();
     }
 }
