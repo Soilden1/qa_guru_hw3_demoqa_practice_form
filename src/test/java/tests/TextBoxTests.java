@@ -3,12 +3,9 @@ package tests;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 
-public class TextBoxTests extends TestBase {
+import static tests.RegistrationTestData.*;
 
-    private static final String FULL_NAME = "Alex Egorov";
-    private static final String EMAIL = "alex@egorov.com";
-    private static final String CURRENT_ADDRESS = "Some address 1";
-    private static final String PERMANENT_ADDRESS = "Another address 1";
+public class TextBoxTests extends TestBase {
 
     private static final TextBoxPage textBoxPage = new TextBoxPage();
 
