@@ -1,28 +1,30 @@
 package tests;
 
-import static utils.RandomDataUtil.*;
+import utils.RandomDataUtil;
 
 public class RegistrationTestData {
 
-    public static final String FIRST_NAME = randomFirstName(),
-            LAST_NAME = randomLastName(),
-            FULL_NAME = randomFullName(),
-            EMAIL = randomEmail(),
-            GENDER = randomGender(),
-            PHONE_NUMBER = randomPhoneNumber(),
-            INVALID_PHONE_NUMBER = randomInvalidPhoneNumber(),
-            BIRTH_DAY = randomDay(),
-            BIRTH_MONTH = randomMonth(),
-            BIRTH_YEAR = randomYear(),
-            DATE_OF_BIRTH = combineIntoDate(BIRTH_DAY, BIRTH_MONTH, BIRTH_YEAR),
+    private final RandomDataUtil rd = new RandomDataUtil();
+
+    public final String FIRST_NAME = rd.randomFirstName(),
+            LAST_NAME = rd.randomLastName(),
+            FULL_NAME = rd.randomFullName(),
+            EMAIL = rd.randomEmail(),
+            GENDER = rd.randomGender(),
+            PHONE_NUMBER = rd.randomPhoneNumber(),
+            INVALID_PHONE_NUMBER = rd.randomInvalidPhoneNumber(),
+            BIRTH_DAY = rd.randomDay(),
+            BIRTH_MONTH = rd.randomMonth(),
+            BIRTH_YEAR = rd.randomYear(),
+            DATE_OF_BIRTH = rd.combineIntoDate(BIRTH_DAY, BIRTH_MONTH, BIRTH_YEAR),
             PICTURE_NAME = "human.png",
             PICTURE_PATH = "img/" + PICTURE_NAME,
-            CURRENT_ADDRESS = randomAddress(),
-            PERMANENT_ADDRESS = randomAddress(),
-            STATE = randomState(),
-            CITY = randomCityByState(STATE),
+            CURRENT_ADDRESS = rd.randomAddress(),
+            PERMANENT_ADDRESS = rd.randomAddress(),
+            STATE = rd.randomState(),
+            CITY = rd.randomCityByState(STATE),
             COMPLETE_SUBMIT_MESSAGE = "Thanks for submitting the form";
 
-    public static final String[] SUBJECTS = randomSubjects(),
-            HOBBIES = randomHobbies();
+    public final String[] SUBJECTS = rd.randomSubjects(),
+            HOBBIES = rd.randomHobbies();
 }
