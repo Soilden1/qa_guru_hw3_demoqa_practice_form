@@ -5,7 +5,7 @@ import pages.RegistrationPage;
 
 public class RegistrationTests extends TestBase {
 
-    private static final RegistrationPage registrationPage = new RegistrationPage();
+    private final RegistrationPage registrationPage = new RegistrationPage();
     private final RegistrationTestData rtd = new RegistrationTestData();
 
     @Test
