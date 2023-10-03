@@ -18,8 +18,7 @@ public class TextBoxPage {
 
     public TextBoxPage openPage() {
         open("/text-box");
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
+        removeBannersAndFooters();
         return this;
     }
 
@@ -60,5 +59,10 @@ public class TextBoxPage {
     public TextBoxPage checkResult(String key, String value) {
         output.checkResult(key, value);
         return this;
+    }
+
+    private void removeBannersAndFooters() {
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
     }
 }

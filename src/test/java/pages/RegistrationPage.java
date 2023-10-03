@@ -37,8 +37,7 @@ public class RegistrationPage {
     public RegistrationPage openPage() {
         open("/automation-practice-form");
         titleLabel.shouldHave(text("Student Registration Form"));
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
+        removeBannersAndFooters();
         return this;
     }
 
@@ -136,5 +135,10 @@ public class RegistrationPage {
     public RegistrationPage closeResultModal() {
         resultTable.close();
         return this;
+    }
+
+    private void removeBannersAndFooters() {
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
     }
 }
