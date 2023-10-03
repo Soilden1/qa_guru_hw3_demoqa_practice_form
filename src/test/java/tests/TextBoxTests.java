@@ -11,27 +11,27 @@ public class TextBoxTests extends TestBase {
     @Test
     public void successfulFormInAllFieldsTest() {
         textBoxPage.openPage()
-                .setFullName(rtd.FULL_NAME)
-                .setEmail(rtd.EMAIL)
-                .setCurrentAddress(rtd.CURRENT_ADDRESS)
-                .setPermanentAddress(rtd.PERMANENT_ADDRESS)
+                .setFullName(rtd.fullName)
+                .setEmail(rtd.email)
+                .setCurrentAddress(rtd.currentAddress)
+                .setPermanentAddress(rtd.permanentAddress)
                 .submitButtonClick();
 
         textBoxPage.checkOutputVisible()
-                .checkResult("Name:", rtd.FULL_NAME)
-                .checkResult("Email:", rtd.EMAIL)
-                .checkResult("Current Address :", rtd.CURRENT_ADDRESS)
-                .checkResult("Permananet Address :", rtd.PERMANENT_ADDRESS);
+                .checkResult("Name:", rtd.fullName)
+                .checkResult("Email:", rtd.email)
+                .checkResult("Current Address :", rtd.currentAddress)
+                .checkResult("Permananet Address :", rtd.permanentAddress);
     }
 
     @Test
     public void successfulFormInFullNameFieldTest() {
         textBoxPage.openPage()
-                .setFullName(rtd.FULL_NAME)
+                .setFullName(rtd.fullName)
                 .submitButtonClick();
 
         textBoxPage.checkOutputVisible()
-                .checkResult("Name:", rtd.FULL_NAME);
+                .checkResult("Name:", rtd.fullName);
     }
 
     @Test

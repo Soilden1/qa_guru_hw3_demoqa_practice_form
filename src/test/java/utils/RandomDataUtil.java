@@ -6,61 +6,61 @@ import java.util.*;
 
 public class RandomDataUtil {
 
-    private final Faker FAKER = new Faker(new Locale("en-GB"));
-    private final String[] GENDERS = {"Male", "Female", "Other"},
-            MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August",
+    private final Faker faker = new Faker(new Locale("en-GB"));
+    private final String[] genders = {"Male", "Female", "Other"},
+            months = {"January", "February", "March", "April", "May", "June", "July", "August",
                     "September", "October", "November", "December"},
-            SUBJECTS = {"Arts", "Accounting", "Biology", "Computer Science", "Commerce", "Civics",
+            subjects = {"Arts", "Accounting", "Biology", "Computer Science", "Commerce", "Civics",
                     "Economics", "English", "Maths", "History", "Hindi", "Physics", "Chemistry"},
-            HOBBIES = {"Sports", "Reading", "Music"};
-    private final Map<String, String[]> STATES_AND_CITIES = new HashMap<>();
+            hobbies = {"Sports", "Reading", "Music"};
+    private final Map<String, String[]> statesAndCities = new HashMap<>();
 
     {
-        STATES_AND_CITIES.put("NCR", new String[]{"Delhi", "Gurgaon", "Noida"});
-        STATES_AND_CITIES.put("Uttar Pradesh", new String[]{"Agra", "Lucknow", "Merrut"});
-        STATES_AND_CITIES.put("Haryana", new String[]{"Karnal", "Panipat"});
-        STATES_AND_CITIES.put("Rajasthan", new String[]{"Jaipur", "Jaiselmer"});
+        statesAndCities.put("NCR", new String[]{"Delhi", "Gurgaon", "Noida"});
+        statesAndCities.put("Uttar Pradesh", new String[]{"Agra", "Lucknow", "Merrut"});
+        statesAndCities.put("Haryana", new String[]{"Karnal", "Panipat"});
+        statesAndCities.put("Rajasthan", new String[]{"Jaipur", "Jaiselmer"});
     }
 
     public String randomFirstName() {
-        return FAKER.name().firstName();
+        return faker.name().firstName();
     }
 
     public String randomLastName() {
-        return FAKER.name().lastName();
+        return faker.name().lastName();
     }
 
     public String randomFullName() {
-        return FAKER.name().fullName();
+        return faker.name().fullName();
     }
 
     public String randomEmail() {
-        return FAKER.internet().emailAddress();
+        return faker.internet().emailAddress();
     }
 
     public String randomGender() {
-        return FAKER.options().option(GENDERS);
+        return faker.options().option(genders);
     }
 
     public String randomPhoneNumber() {
-        return FAKER.phoneNumber().subscriberNumber(10);
+        return faker.phoneNumber().subscriberNumber(10);
     }
 
     public String randomInvalidPhoneNumber() {
-        return FAKER.phoneNumber().subscriberNumber(5);
+        return faker.phoneNumber().subscriberNumber(5);
     }
 
     public String randomDay() {
-        int day = FAKER.random().nextInt(1, 28);
+        int day = faker.random().nextInt(1, 28);
         return day < 10 ? "0" + day : String.valueOf(day);
     }
 
     public String randomMonth() {
-        return FAKER.options().option(MONTHS);
+        return faker.options().option(months);
     }
 
     public String randomYear() {
-        return FAKER.random().nextInt(1900, 2023).toString();
+        return faker.random().nextInt(1900, 2023).toString();
     }
 
     public String combineIntoDate(String day, String month, String year) {
@@ -68,29 +68,29 @@ public class RandomDataUtil {
     }
 
     public String[] randomSubjects() {
-        return randomElementsFromArray(SUBJECTS);
+        return randomElementsFromArray(subjects);
     }
 
     public String[] randomHobbies() {
-        return randomElementsFromArray(HOBBIES);
+        return randomElementsFromArray(hobbies);
     }
 
     public String randomAddress() {
-        return FAKER.address().fullAddress();
+        return faker.address().fullAddress();
     }
 
     public String randomState() {
-        return FAKER.options().option(STATES_AND_CITIES.keySet().toArray(new String[0]));
+        return faker.options().option(statesAndCities.keySet().toArray(new String[0]));
     }
 
     public String randomCityByState(String state) {
-        return FAKER.options().option(STATES_AND_CITIES.get(state));
+        return faker.options().option(statesAndCities.get(state));
     }
 
     private String[] randomElementsFromArray(String[] array) {
         List<String> elements = new ArrayList<>(Arrays.asList(array));
         Collections.shuffle(elements);
-        int randomCount = FAKER.random().nextInt(1, array.length - 1);
+        int randomCount = faker.random().nextInt(1, array.length - 1);
         return elements.subList(0, randomCount).toArray(new String[0]);
     }
 }

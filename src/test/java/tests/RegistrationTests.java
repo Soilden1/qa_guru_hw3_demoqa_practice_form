@@ -11,61 +11,61 @@ public class RegistrationTests extends TestBase {
     @Test
     public void successfulRegistrationInAllFieldsTest() {
         registrationPage.openPage()
-                .setFirstName(rtd.FIRST_NAME)
-                .setLastName(rtd.LAST_NAME)
-                .setEmail(rtd.EMAIL)
-                .setGender(rtd.GENDER)
-                .setPhoneNumber(rtd.PHONE_NUMBER)
-                .setDateOfBirth(rtd.BIRTH_DAY, rtd.BIRTH_MONTH, rtd.BIRTH_YEAR)
-                .setSubjects(rtd.SUBJECTS)
-                .setHobbies(rtd.HOBBIES)
-                .uploadPicture(rtd.PICTURE_PATH)
-                .setCurrentAddress(rtd.CURRENT_ADDRESS)
-                .setState(rtd.STATE)
-                .setCity(rtd.CITY)
+                .setFirstName(rtd.firstName)
+                .setLastName(rtd.lastName)
+                .setEmail(rtd.email)
+                .setGender(rtd.gender)
+                .setPhoneNumber(rtd.phoneNumber)
+                .setDateOfBirth(rtd.birthDay, rtd.birthMonth, rtd.birthYear)
+                .setSubjects(rtd.subjects)
+                .setHobbies(rtd.hobbies)
+                .uploadPicture(rtd.picturePath)
+                .setCurrentAddress(rtd.currentAddress)
+                .setState(rtd.state)
+                .setCity(rtd.city)
                 .submitButtonClick();
 
         registrationPage.checkResultModalVisible()
-                .checkResultModalTitleHaveMessage(rtd.COMPLETE_SUBMIT_MESSAGE)
-                .checkResult("Student Name", rtd.FIRST_NAME + " " + rtd.LAST_NAME)
-                .checkResult("Student Email", rtd.EMAIL)
-                .checkResult("Gender", rtd.GENDER)
-                .checkResult("Mobile", rtd.PHONE_NUMBER)
-                .checkResult("Date of Birth", rtd.DATE_OF_BIRTH)
-                .checkResult("Subjects", String.join(", ", rtd.SUBJECTS))
-                .checkResult("Hobbies", String.join(", ", rtd.HOBBIES))
-                .checkResult("Picture", rtd.PICTURE_NAME)
-                .checkResult("Address", rtd.CURRENT_ADDRESS)
-                .checkResult("State and City", rtd.STATE + " " + rtd.CITY);
+                .checkResultModalTitleHaveMessage(rtd.completeSubmitMessage)
+                .checkResult("Student Name", rtd.firstName + " " + rtd.lastName)
+                .checkResult("Student Email", rtd.email)
+                .checkResult("Gender", rtd.gender)
+                .checkResult("Mobile", rtd.phoneNumber)
+                .checkResult("Date of Birth", rtd.dateOfBirth)
+                .checkResult("Subjects", String.join(", ", rtd.subjects))
+                .checkResult("Hobbies", String.join(", ", rtd.hobbies))
+                .checkResult("Picture", rtd.pictureName)
+                .checkResult("Address", rtd.currentAddress)
+                .checkResult("State and City", rtd.state + " " + rtd.city);
     }
 
     @Test
     public void successfulRegistrationInRequiredFieldsTest() {
         registrationPage.openPage()
-                .setFirstName(rtd.FIRST_NAME)
-                .setLastName(rtd.LAST_NAME)
-                .setGender(rtd.GENDER)
-                .setPhoneNumber(rtd.PHONE_NUMBER)
+                .setFirstName(rtd.firstName)
+                .setLastName(rtd.lastName)
+                .setGender(rtd.gender)
+                .setPhoneNumber(rtd.phoneNumber)
                 .submitButtonClick();
 
         registrationPage.checkResultModalVisible()
-                .checkResultModalTitleHaveMessage(rtd.COMPLETE_SUBMIT_MESSAGE)
-                .checkResult("Student Name", rtd.FIRST_NAME + " " + rtd.LAST_NAME)
-                .checkResult("Gender", rtd.GENDER)
-                .checkResult("Mobile", rtd.PHONE_NUMBER);
+                .checkResultModalTitleHaveMessage(rtd.completeSubmitMessage)
+                .checkResult("Student Name", rtd.firstName + " " + rtd.lastName)
+                .checkResult("Gender", rtd.gender)
+                .checkResult("Mobile", rtd.phoneNumber);
     }
 
     @Test
     public void closeModalTest() {
         registrationPage.openPage()
-                .setFirstName(rtd.FIRST_NAME)
-                .setLastName(rtd.LAST_NAME)
-                .setGender(rtd.GENDER)
-                .setPhoneNumber(rtd.PHONE_NUMBER)
+                .setFirstName(rtd.firstName)
+                .setLastName(rtd.lastName)
+                .setGender(rtd.gender)
+                .setPhoneNumber(rtd.phoneNumber)
                 .submitButtonClick();
 
         registrationPage.checkResultModalVisible()
-                .checkResultModalTitleHaveMessage(rtd.COMPLETE_SUBMIT_MESSAGE)
+                .checkResultModalTitleHaveMessage(rtd.completeSubmitMessage)
                 .closeResultModal()
                 .checkResultModalHidden();
     }
@@ -73,10 +73,10 @@ public class RegistrationTests extends TestBase {
     @Test
     public void negativeRegistrationWithInvalidPhoneNumberTest() {
         registrationPage.openPage()
-                .setFirstName(rtd.FIRST_NAME)
-                .setLastName(rtd.LAST_NAME)
-                .setGender(rtd.GENDER)
-                .setPhoneNumber(rtd.INVALID_PHONE_NUMBER)
+                .setFirstName(rtd.firstName)
+                .setLastName(rtd.lastName)
+                .setGender(rtd.gender)
+                .setPhoneNumber(rtd.invalidPhoneNumber)
                 .submitButtonClick();
 
         registrationPage.checkResultModalHidden();
