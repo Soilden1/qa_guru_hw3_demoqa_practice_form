@@ -1,8 +1,12 @@
 package tests;
 
+import io.qameta.allure.Owner;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 
+@Tag("demoqa_text_box_test")
+@Owner("dimacm14")
 public class TextBoxTests extends TestBase {
 
     private final TextBoxPage textBoxPage = new TextBoxPage();

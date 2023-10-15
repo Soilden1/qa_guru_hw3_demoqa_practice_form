@@ -1,13 +1,22 @@
 package tests;
 
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
+@Tag("demoqa_registration_test")
+@Feature("Регистрация")
+@Owner("dimacm14")
+@Severity(SeverityLevel.BLOCKER)
 public class RegistrationTests extends TestBase {
 
     private final RegistrationPage registrationPage = new RegistrationPage();
     private final RegistrationTestData rtd = new RegistrationTestData();
 
+    @Story("Регистрация с заполнением всех полей")
+    @DisplayName("Регистрация с заполнением всех полей")
     @Test
     public void successfulRegistrationInAllFieldsTest() {
         registrationPage.openPage()
@@ -39,6 +48,8 @@ public class RegistrationTests extends TestBase {
                 .checkResult("State and City", rtd.state + " " + rtd.city);
     }
 
+    @Story("Регистрация с заполнением обязательных полей")
+    @DisplayName("Регистрация с заполнением обязательных полей")
     @Test
     public void successfulRegistrationInRequiredFieldsTest() {
         registrationPage.openPage()
@@ -55,6 +66,8 @@ public class RegistrationTests extends TestBase {
                 .checkResult("Mobile", rtd.phoneNumber);
     }
 
+    @Story("Регистрация с заполнением обязательных полей")
+    @DisplayName("Результирующее модальное окно закрывается при нажатии кнопки 'Close'")
     @Test
     public void closeModalTest() {
         registrationPage.openPage()
@@ -70,6 +83,8 @@ public class RegistrationTests extends TestBase {
                 .checkResultModalHidden();
     }
 
+    @Story("Регистрация с заполнением обязательных полей")
+    @DisplayName("При вводе невалидного номера телефона результирующее модальное окно не отображается")
     @Test
     public void negativeRegistrationWithInvalidPhoneNumberTest() {
         registrationPage.openPage()
@@ -82,6 +97,8 @@ public class RegistrationTests extends TestBase {
         registrationPage.checkResultModalHidden();
     }
 
+    @Story("Регистрация с заполнением обязательных полей")
+    @DisplayName("При клике на кнопку 'Submit' без заполнения обязательных полей результирующее модальное окно не отображается")
     @Test
     public void negativeRegistrationWithoutFillingFieldsTest() {
         registrationPage.openPage()
