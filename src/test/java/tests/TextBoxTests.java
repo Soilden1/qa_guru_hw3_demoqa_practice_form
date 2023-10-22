@@ -7,7 +7,7 @@ import pages.TextBoxPage;
 
 @Tag("demoqa_text_box_test")
 @Owner("dimacm14")
-public class TextBoxTests extends TestBase {
+public class TextBoxTests extends RemoteTestBase {
 
     private final TextBoxPage textBoxPage = new TextBoxPage();
     private final RegistrationTestData rtd = new RegistrationTestData();
