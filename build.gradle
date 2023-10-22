@@ -10,10 +10,6 @@ repositories {
 group 'guru.qa'
 version '1.0'
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
 dependencies {
     testImplementation (
             'com.codeborne:selenide:6.16.0',
@@ -23,8 +19,29 @@ dependencies {
     )
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
 task demoqa_test(type: Test) {
     useJUnitPlatform {
         includeTags("demoqa_registration_test")
+    }
+}
+
+task text_box_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("demoqa_text_box_test")
     }
 }
