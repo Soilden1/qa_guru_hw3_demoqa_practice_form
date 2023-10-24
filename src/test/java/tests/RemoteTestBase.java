@@ -20,6 +20,7 @@ public class RemoteTestBase {
         Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
         Configuration.browserSize = System.getProperty("browserSize");
         Configuration.browser = System.getProperty("browser");
+        Configuration.browserVersion = System.getProperty("version");
         Configuration.holdBrowserOpen = false;
         Configuration.timeout = 10000;
         Configuration.remote = System.getProperty("webDriverHost");
@@ -27,7 +28,6 @@ public class RemoteTestBase {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", System.getProperty("browser"));
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                 "enableVNC", true,
                 "enableVideo", true
