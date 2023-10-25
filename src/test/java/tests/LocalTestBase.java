@@ -7,6 +7,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
+import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class LocalTestBase {
@@ -16,7 +17,7 @@ public class LocalTestBase {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
-        Configuration.browser = "chrome";
+        Configuration.browser = "firefox";
         Configuration.holdBrowserOpen = false;
         Configuration.timeout = 10000;
 
@@ -27,7 +28,9 @@ public class LocalTestBase {
     void addAttachments() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
-        Attach.browserConsoleLogs();
+        if (!browser.equals("firefox")) {
+            Attach.browserConsoleLogs();
+        }
         Attach.addVideo();
 
         closeWebDriver();

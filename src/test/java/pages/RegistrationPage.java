@@ -8,6 +8,7 @@ import pages.components.DropDownListComponent;
 import pages.components.ModalContentComponent;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -98,7 +99,9 @@ public class RegistrationPage {
 
     @Step("Загрузить картинку по пути {path}")
     public RegistrationPage uploadPicture(String path) {
-        uploadPictureInput.uploadFromClasspath(path);
+        if (!browser.equals("firefox")) {
+            uploadPictureInput.uploadFromClasspath(path);
+        }
         return this;
     }
 

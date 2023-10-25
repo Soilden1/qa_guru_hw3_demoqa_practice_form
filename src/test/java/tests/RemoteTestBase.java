@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 
+import static com.codeborne.selenide.Configuration.browser;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class RemoteTestBase {
@@ -39,7 +40,9 @@ public class RemoteTestBase {
     void addAttachments() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
-        Attach.browserConsoleLogs();
+        if (!browser.equals("firefox")) {
+            Attach.browserConsoleLogs();
+        }
         Attach.addVideo();
 
         closeWebDriver();
