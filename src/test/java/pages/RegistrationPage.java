@@ -150,7 +150,7 @@ public class RegistrationPage {
 
     @Step("Проверить результат для {key} : {value}")
     public RegistrationPage checkResult(String key, String value) {
-        if (!browser.equals("firefox") && key.equals("Picture")) {
+        if (!(browser.equals("firefox") && key.equals("Picture"))) {
             resultTable.checkResult(key, value);
         }
         return this;
