@@ -19,12 +19,12 @@ public class RemoteTestBase {
     static void setUp() {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");
-        Configuration.browserSize = System.getProperty("browserSize");
-        Configuration.browser = System.getProperty("browser");
-        Configuration.browserVersion = System.getProperty("version");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("version", "100");
         Configuration.holdBrowserOpen = false;
         Configuration.timeout = 10000;
-        Configuration.remote = System.getProperty("webDriverHost");
+        Configuration.remote = System.getProperty("webDriverHost", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
