@@ -10,7 +10,7 @@ import pages.RegistrationPage;
 @Feature("Регистрация")
 @Owner("dimacm14")
 @Severity(SeverityLevel.BLOCKER)
-public class RegistrationTests extends RemoteTestBase {
+public class RegistrationTests extends LocalTestBase {
 
     private final RegistrationPage registrationPage = new RegistrationPage();
     private final RegistrationTestData rtd = new RegistrationTestData();
